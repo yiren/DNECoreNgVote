@@ -1,0 +1,45 @@
+<!--
+    <app-vote-form [voteItems]="voteItems | async" [voteEvent]="voteEvents" (recordForEmit)="addVoteRecord($event)"></app-vote-form>
+
+
+    <h3 *ngFor="let item of voteItems | async;let i=index">
+      Option{{i}}:{{item.voteCount.length}}
+    </h3>
+
+    <button type="submit" color="primary" md-raised-button (click)="addVoteItem()">Add VoteItem</button>
+    <hr/>
+    <app-voting-result></app-voting-result>
+    -->
+
+<div class="col-md-12">
+    <a class="btn btn-primary" [routerLink]="['/createVote']" *ngIf="isLogged else login">建立投票活動</a>
+    <ng-template #login>
+        <a class="btn btn-success" [routerLink]="['/login']">管理(帳號:admin，密碼:兩排)</a>
+    </ng-template>
+</div>
+<div class="row">
+    <div class="col-md-4" *ngFor="let event of voteEvents">
+
+        <div class="card mw-50 m-2">
+            <div class="card-block">
+                <h4 class="card-title">{{event.eventName}}</h4>
+                <p class="card-text">
+
+                    <a [routerLink]="['voteForm',event.eventId]" class="btn btn-primary">去投票</a>
+
+                    <ng-template #disableVote>
+                        <button type="btn btn-default" disabled>Due</button>
+                    </ng-template>
+                    <a [routerLink]="[event.eventId,'voteResult']" class="btn btn-info">投票結果</a>
+                </p>
+                <p class="card-text">
+                    <a [routerLink]="[event.eventId,'editEvent']" class="btn btn-danger" *ngIf="isLogged">編輯活動</a>
+                </p>
+            </div>
+            <div class="card-footer text-muted">
+                {{event.dueDate}}
+            </div>
+        </div>
+
+    </div>
+</div>

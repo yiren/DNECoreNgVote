@@ -1,0 +1,21 @@
+<toaster-container></toaster-container>
+<div class="col-md-6">
+    <h2>請登入</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="userId">管理者帳號</label>
+            <input type="text" class="form-control m-1" placeholder="" formControlName="userId">
+            <div *ngIf="loginForm.controls['userId'].hasError('required')" class="alert alert-danger">
+                請輸入帳號
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pass">密碼</label>
+            <input type="password" class="form-control m-1" placeholder="" formControlName="password">
+            <div *ngIf="loginForm.controls['password'].hasError('required')" class="alert alert-danger">
+                請輸入密碼
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="!loginForm.valid || submitted">登入</button>
+    </form>
+</div>

@@ -1,0 +1,24 @@
+<div>
+    <!--
+  <h3>{{eventName}}</h3>
+  {{barChartLabels | json}}
+  <hr>
+  {{barChartData |json}}
+
+  <div style="display: block">
+    <canvas baseChart
+
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+  -->
+</div>
+<div *ngIf="isLoaded">
+    <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
+</div>
