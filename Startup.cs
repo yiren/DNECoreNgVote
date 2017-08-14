@@ -14,6 +14,10 @@ using CoreMVC.Data.Voting;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using CoreMVC.Data.Voting.Service;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using System.IdentityModel.Tokens.Jwt;
+using IdentityServer4.AccessTokenValidation;
 
 namespace updatedAngularCoreTemplate
 {
@@ -80,6 +84,28 @@ namespace updatedAngularCoreTemplate
             }
 
             app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider=new PhysicalFileProvider(Path.Combine(env.ContentRootPath,@"node_modules")),
+            //    RequestPath=new Microsoft.AspNetCore.Http.PathString("/node_modules")
+
+            //});
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //ClientCreditential
+
+
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = "http://localhost:5000",
+                AllowedScopes = new List<string> { "voteEventData", "api1" },
+                //ApiSecret = "myVote",
+                //SupportedTokens = SupportedTokens.Both,
+                RequireHttpsMetadata = false,
+                ApiName = "voteEventData",
+                //AutomaticChallenge = true,
+                //AutomaticAuthenticate = true
+            });
             VoteSeedData.addVoteSeedData(voteDbContext);
             app.UseMvc(routes =>
             {

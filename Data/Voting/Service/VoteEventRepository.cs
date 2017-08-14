@@ -6,6 +6,7 @@ using CoreMVC.Models.Voting;
 using CoreMVC.ViewModel.Voting;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using ngVoteCore.Models.Voting;
 
 namespace CoreMVC.Data.Voting.Service
 {
@@ -169,6 +170,27 @@ namespace CoreMVC.Data.Voting.Service
             var e = db.VoteEvents.Where(v => v.EventId.Equals(eventId)).Include(v => v.VoteItems).Include(v => v.VoteRecords).SingleOrDefault();
             db.VoteEvents.Remove(e);
             await db.SaveChangesAsync();
+        }
+
+        public async Task<ItemFile> SaveUploadedItemFile(string fileName)
+        {
+            ItemFile file= new ItemFile()
+            {
+                FileId=Guid.NewGuid(),
+                FileName=fileName
+            };
+            await db.ItemFiles.AddAsync(file);
+            
+            if (await db.SaveChangesAsync() > 0) {
+                return file;
+            } else {
+                return null;
+            };
+        }
+
+        public async Task<IList<ItemFile>> GetItemFileList()
+        {
+            return await db.ItemFiles.ToListAsync();
         }
     }
 }

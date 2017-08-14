@@ -1,4 +1,30 @@
 <div class="container">
-    <h1 class="text-info">核技處處內投票活動</h1>
+    <h4>Upload Test</h4>
+    <input type="file" (change)="uploadFile()" #formFile>
+    <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+
+        </div>
+    </div>
+    <img *ngFor="let file of files | async " src="/upload/{{file.fileName}}" alt="">
+    <pre>
+        {{files |async |json}}
+        {{fileResult|json}}
+        
+    </pre>
+    <h1 class="text-info"><span class="fa fa-gift"></span>核技處處內投票活動</h1>
     <router-outlet></router-outlet>
+    <div>
+        <button type="button" class="btn btn-primary" (click)="login()">Login</button>
+        <button type="button" class="btn btn-warning" (click)="getUserInfo()">GetUserInfo</button>
+        <button type="button" class="btn btn-info" (click)="call()">Call API</button>
+        <button type="button" class="btn btn-default" (click)="logout()">Logout</button>
+
+    </div>
+    <pre>
+    {{user}}
+    </pre>
+
+    <hr>
+
 </div>

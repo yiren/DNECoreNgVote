@@ -1,5 +1,6 @@
 ﻿using CoreMVC.Models.Voting;
 using CoreMVC.ViewModel.Voting;
+using ngVoteCore.Models.Voting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace CoreMVC.Data.Voting.Service
         Task<IEnumerable> GetVoteResultByEventId(string eventId);
         Task UpdateEvent(string id, VoteEventPostViewModel updatedEvent);
         Task DeleteEvent(string id);
+        Task<ItemFile> SaveUploadedItemFile(string fileName);
+        Task<IList<ItemFile>> GetItemFileList();
     }
 }

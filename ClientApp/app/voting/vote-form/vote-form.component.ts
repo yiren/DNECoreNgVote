@@ -81,7 +81,7 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     this.users$=this.userService.getDneUsers();
     console.log("User$",this.users$);
     this.votingForm=new FormGroup({
-      'voterName':new FormControl('',[Validators.required], this.validateDneUser.bind(this)),
+      'voterName':new FormControl('',[Validators.required]),
       'selectedOptionId':new FormControl(null,[Validators.required]),
       //'checkOptions':this.checkboxGroup
     });

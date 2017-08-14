@@ -1,6 +1,7 @@
 ﻿using CoreMVC.Models.Voting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ngVoteCore.Models.Voting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CoreMVC.Data.Voting
         public DbSet<VoteEvent> VoteEvents { get; set; }
         public DbSet<VoteItem> VoteItems { get; set; }
         public DbSet<VoteRecord> VoteRecords { get; set; }
+        public DbSet<ItemFile> ItemFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,6 +33,11 @@ namespace CoreMVC.Data.Voting
 
             builder.Entity<VoteItem>()
                     .HasKey(i => i.ItemId);
+
+            builder.Entity<ItemFile>(o =>
+            {
+                o.HasKey(f => f.FileId);
+            });
 
             //builder.Entity<VoteItem>()
             //       .Property(i => i.ItemId)
