@@ -1,6 +1,7 @@
 import { Route, RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { AuthGuardService } from './auth/service/auth-guard.service';
 import { EditEventComponent } from './voting/edit-event/edit-event.component';
 import { EventFormComponent } from './voting/event-form/event-form.component';
@@ -12,6 +13,11 @@ import { VoteResultResolverService } from './voting/service/vote-result-resolver
 import { VotingResultComponent } from './voting/voting-result/voting-result.component';
 
 export const AppRoute:Routes=[
+  
+  {
+    path:'auth-callback',
+    component:AuthCallbackComponent
+  },
   {
     path:'createVote', 
     component:EventFormComponent,

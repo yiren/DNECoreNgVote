@@ -5,11 +5,11 @@
 <form [formGroup]="votingForm" (ngSubmit)="onSubmit()">
 
     <div class="fomr-group">
-        <input class="form-control m-1" formControlName="voterName" placeholder="開機帳號">
-        <div *ngIf="votingForm.controls['voterName'].hasError('required')" class="alert alert-danger">
+        <input class="form-control m-1" formControlName="voterName" placeholder="開機帳號" #name>
+        <div *ngIf="votingForm.controls['voterName'].hasError('required') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
             請輸入開機帳號
         </div>
-        <div *ngIf="votingForm.controls['voterName'].hasError('NotDneUser') && votingForm.dirty" class="alert alert-danger">
+        <div *ngIf="votingForm.controls['voterName'].hasError('NotDneUser') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
             您不是Dne使用者
         </div>
     </div>
@@ -24,7 +24,7 @@
             </label>
 
         </div>
-        <div *ngIf="votingForm.controls['selectedOptionId'].hasError('required')" class="alert alert-danger">
+        <div *ngIf="votingForm.controls['selectedOptionId'].hasError('required') && !votingForm.controls['selectedOptionId'].pristine" class="alert alert-danger">
             請選擇
         </div>
     </div>

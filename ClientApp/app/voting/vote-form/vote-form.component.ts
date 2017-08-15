@@ -4,7 +4,7 @@ import "rxjs/add/operator/distinctUntilChanged";
 import * as _ from 'lodash';
 
 import {ActivatedRoute, Router} from '@angular/router';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import { Observable } from 'rxjs/observable';
@@ -24,7 +24,7 @@ import { VoteRecord } from './../model/VoteRecord';
 })
 export class VoteFormComponent implements OnInit, OnDestroy {
   eventId: string;
-
+  @ViewChild('name') name;
   //voteEvents$:Observable<VoteEvent[]>
   votingForm:FormGroup;
   voteItems:VoteItem[];
@@ -58,7 +58,7 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     //   this.radioGroup.addControl(item.name, control);
     //   console.log('radio:',this.radioGroup);
     // }
-
+    console.log(this.name);
     this.subscription=this.voteDataService
         .getVoteEventById(this.route.snapshot.params['eventId'])
         .subscribe(event=>{

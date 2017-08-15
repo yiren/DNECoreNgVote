@@ -5,10 +5,26 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class ProgressService {
 
-    uploadProgress:Subject<any>=new Subject();
+    private uploadProgress:Subject<any>
 
     constructor() {
 
+     }
+
+     CreateUploadProgress(){
+         this.uploadProgress=new Subject();
+         return this.uploadProgress;
+     }
+
+     notify(progress){
+        this.uploadProgress.next(progress);
+     }
+
+     complete(){
+         this.uploadProgress.complete();
+     }
+     getProgress(){
+         return this.uploadProgress;
      }
 }
 
@@ -26,13 +42,22 @@ export class CustomXhrService extends BrowserXhr {
         xhr.upload.onprogress=(event)=>{
             console.log(event);
             console.log(Math.round(event.loaded/event.total*100));
-            this.progressService.uploadProgress.next({
-                total:event.total,
-                percentage:Math.round(event.loaded/event.total*100)
-            });
+            this.progressService.notify(this.UploadObject(event));
         };
+
+        xhr.upload.onloadend=()=>{
+            //console.log("BEFORE:",this.progressService.getProgress());
+            this.progressService.complete();
+            //console.log("AFTER:",this.progressService.getProgress());
+        }
         
 
         return xhr;
+    }
+    private UploadObject(event){
+        return {
+            total:event.total,
+            percentage:Math.round(event.loaded/event.total*100)
+        };
     }
 }
