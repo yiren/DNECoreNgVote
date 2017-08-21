@@ -115,6 +115,11 @@ export class UsersService {
 
   USER_URL="home/getdneusers";
   constructor(private http:Http) { }
+  
+  queryDneUser(user:string){
+    return this.http.get(`/home/QueryLdapUser?user=${user}`)
+                    .map(res=>res.json());
+  }
 
   getDneUsers():Observable<User[]>{
     return this.http.get(this.USER_URL)

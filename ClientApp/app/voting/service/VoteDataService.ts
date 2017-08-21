@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 
 import {Headers, Http, Response} from '@angular/http';
 
+import { AuthService } from '../../auth/service/auth.service';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/observable';
@@ -19,6 +20,7 @@ import { VoteRecord } from '../model/VoteRecord';
 import { VoteResult } from '../model/VoteResult';
 
 //import { InMemoryDataService } from '../../webapi/InMemoryDataService';
+
 
 
 
@@ -60,7 +62,7 @@ export class VoteDataService {
   private voteRecordUrl='api/voterecords';
 
 
-  constructor(private http:Http){}
+  constructor(private http:Http, private authService:AuthService){}
   // InMemoryDatabase can be updated only via http verbs
   // , private memDb:InMemoryDataService) { }
 
@@ -198,7 +200,10 @@ export class VoteDataService {
   // }
 
   getVoteEvents():Observable<VoteEvent[]>{
-    return this.http.get(this.voteEventUrl)
+    //let header = new Headers({ 'Authorization': this.authService.getAuthorizationHeaderValue() });
+    return this.http.get(this.voteEventUrl
+      //, {headers:header}
+    )
                .do(console.log)
                .map(res=>res.json() as VoteEvent[])
                ;

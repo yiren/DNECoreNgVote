@@ -1,5 +1,6 @@
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/operator/switchmap";
 
 import * as _ from 'lodash';
 
@@ -30,6 +31,7 @@ export class VoteFormComponent implements OnInit, OnDestroy {
   voteItems:VoteItem[];
   subscription:Subscription;
   eventName:string;
+  user:string;
   users$:Observable<User[]>;
   //voteItems$:Subscription;
   // @Input()
@@ -40,7 +42,7 @@ export class VoteFormComponent implements OnInit, OnDestroy {
 
   // @Output()
   // recordForEmit=new EventEmitter<VoteRecord>()
-
+  input$=new Subject<string>();
  // checkboxGroup:FormGroup
   //radioGroup:FormGroup
   constructor(private voteDataService:VoteDataService,
@@ -58,6 +60,9 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     //   this.radioGroup.addControl(item.name, control);
     //   console.log('radio:',this.radioGroup);
     // }
+    this.input$.subscribe((input)=>{
+
+    })
     console.log(this.name);
     this.subscription=this.voteDataService
         .getVoteEventById(this.route.snapshot.params['eventId'])
@@ -78,16 +83,15 @@ export class VoteFormComponent implements OnInit, OnDestroy {
 
 
 
-    this.users$=this.userService.getDneUsers();
+    
     console.log("User$",this.users$);
     this.votingForm=new FormGroup({
-      'voterName':new FormControl('',[Validators.required]),
+      'voterName':new FormControl('',[Validators.required],this.validateDneUser.bind(this)),
       'selectedOptionId':new FormControl(null,[Validators.required]),
       //'checkOptions':this.checkboxGroup
     });
     console.log(this.votingForm);
     this.votingForm.valueChanges
-      .debounceTime(3000)
       .subscribe(data=>{
         console.log(data);
         this.onValueChanged(data)
@@ -122,23 +126,38 @@ export class VoteFormComponent implements OnInit, OnDestroy {
   }
 
   validateDneUser(c: FormControl){
+    const inputUser$=c.valueChanges.debounceTime(1000);
+     
+    
+
     return new Promise((resolve, reject)=>{
-            this.users$
-            .debounceTime(5000)
+            inputUser$
+            
+            .switchMap(user=>this.userService.queryDneUser(user))
+            
             .subscribe(
               res => {
-                //console.log("Users",res);
-                let matched=_.find(res, (user:User)=>{
-                  return user.sAMAccountName===c.value
-                })
-                if(matched === undefined){
-                  console.log(c.value+" is not valid.");
-                  resolve({'NotDneUser':true})
-                }else{
-                  console.log(c.value+"is Dne User");
+                //console.log(res.isDneUser);
+                if(!res.isDneUser){
+                  //console.log("Not Dne User");
+                  resolve({'NotDneUser':true});
+                }
+                if(res.isDneUser==true){
                   resolve(null);
-                }},
-                console.error
+                }
+              }
+                //console.log("Users",res);
+                // let matched=_.find(res, (user:User)=>{
+                //   return user.sAMAccountName===c.value
+                // })
+                // if(matched === undefined){
+                //   console.log(c.value+" is not valid.");
+                //   resolve({'NotDneUser':true})
+                // }else{
+                //   console.log(c.value+"is Dne User");
+                //   resolve(null);
+                // }},
+                // console.error}
             );
     });
   }

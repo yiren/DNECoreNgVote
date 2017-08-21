@@ -9,12 +9,14 @@ using CoreMVC.Data.Voting.Service;
 using CoreMVC.Models.Voting;
 using CoreMVC.ViewModel.Voting;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreMVC.Controllers
 {
     [Produces("application/json")]
     [Route("api/VoteEvents")]
     [EnableCors("AllowAll")]
+    //[Authorize(Policy ="dataAdmin")]
     public class VoteEventsController : Controller
     {
         private readonly IVoteEventRepository repo;
@@ -38,7 +40,7 @@ namespace CoreMVC.Controllers
                 eventId
             };
         }
-
+        
         [HttpGet("{eventId}/voteresult")]
         public async Task<IEnumerable> GetVoteResultByEventId(string eventId)
         {

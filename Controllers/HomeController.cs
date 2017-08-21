@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using CoreMVC.Data.Voting.Service;
+using ngVoteCore.Services.User;
 
 namespace updatedAngularCoreTemplate.Controllers
 {
@@ -55,6 +56,15 @@ namespace updatedAngularCoreTemplate.Controllers
             
 
             return Ok(eventRepo.SaveUploadedItemFile(fileName));
+        }
+
+        LdapUserService ldapUserService = new LdapUserService();
+        public IActionResult QueryLdapUser([FromQuery]string user)
+        {
+            var isDneUser = ldapUserService.QueryLdapUser(user);
+            return new JsonResult(new {
+                isDneUser=isDneUser
+            });
         }
         public IActionResult GetDneUsers()
         {

@@ -45,9 +45,27 @@ namespace updatedAngularCoreTemplate
                         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                     }); ;
             services.AddDbContext<VotingDbContext>(options =>
-                options.UseInMemoryDatabase());
+                options.UseSqlServer(Configuration.GetConnectionString("VotingDataStore")));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("dataAdmin", adminPolicy =>
+                {
+                    adminPolicy.RequireClaim("role", "dataEventRecords.admin");
+                });
+                options.AddPolicy("dataUser", userPolicy =>
+                {
+                    userPolicy.RequireClaim("role", "dataEventRecords.user");
+                });
+                options.AddPolicy("test", userPolicy =>
+                {
+                    userPolicy.RequireClaim("role", "user");
+                });
+            });
+
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader()));
 
+            
             services.AddScoped<IVoteEventRepository, VoteEventRepository>();
             services.AddScoped<IVoteRecordRepository, VoteRecordRepository>();
             //services.AddNodeServices(options =>
@@ -92,19 +110,18 @@ namespace updatedAngularCoreTemplate
             //});
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            //ClientCreditential
-
-
+            // ClientCreditential
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
                 Authority = "http://localhost:5000",
                 AllowedScopes = new List<string> { "voteEventData", "api1" },
-                //ApiSecret = "myVote",
-                //SupportedTokens = SupportedTokens.Both,
+                ApiSecret = "myVote",
+
+                SupportedTokens = SupportedTokens.Both,
                 RequireHttpsMetadata = false,
                 ApiName = "voteEventData",
-                //AutomaticChallenge = true,
-                //AutomaticAuthenticate = true
+                AutomaticChallenge = true,
+                AutomaticAuthenticate = true
             });
             VoteSeedData.addVoteSeedData(voteDbContext);
             app.UseMvc(routes =>

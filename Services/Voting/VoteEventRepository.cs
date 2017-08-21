@@ -24,7 +24,6 @@ namespace CoreMVC.Data.Voting.Service
             var record = new VoteEvent();
             record.EventId = Guid.NewGuid();
             record.EventName = newEvent.EventName;
-            record.IsDue = false;
             record.CreateDate = DateTime.Now.ToString("yyyy/MM/dd");
             record.DueDate = DateTime.Parse(newEvent.DueDate).ToString("yyyy/MM/dd");
             var items = new List<VoteItem>();
@@ -44,8 +43,7 @@ namespace CoreMVC.Data.Voting.Service
                 
                 db.VoteEvents.Add(record);
 
-                var a = db.SaveChanges();
-                var b = a;
+                await db.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -61,7 +59,7 @@ namespace CoreMVC.Data.Voting.Service
             var eventId = new Guid(id);
             var e =db.VoteEvents.Include(t=>t.VoteItems).Include(t=>t.VoteRecords).Single(t => t.EventId.Equals(eventId));
             e.EventName = updatedEvent.EventName;
-            e.IsDue = updatedEvent.isDue;
+          
             e.DueDate = DateTime.Parse(updatedEvent.DueDate).ToString("yyyy/MM/dd");
             List<string> dbItems = new List<string>();
             List<string> updatedItems = new List<string>();
@@ -105,7 +103,7 @@ namespace CoreMVC.Data.Voting.Service
                 db.VoteItems.AddRange(items);
                 
                 db.VoteEvents.Update(e);
-                var a=await db.SaveChangesAsync();
+                await db.SaveChangesAsync();
                 
             }
             catch (Exception ex)

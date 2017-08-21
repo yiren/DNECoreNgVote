@@ -48,7 +48,7 @@ namespace CoreMVC.Data.Voting
         public VotingDbContext Create(DbContextFactoryOptions options)
         {
             var optionBuilder = new DbContextOptionsBuilder<VotingDbContext>();
-            optionBuilder.UseSqlServer("Server=.\\SQLEXPRESS2014;Database=VegaDataStore;user id=sa;password=LGA2011;persist security info=True;MultipleActiveResultSets=true");
+            optionBuilder.UseSqlServer("Server=10.20.1.4\\SQLEXPRESS04;Database=DneVotingData;user id=sa;password=LGA2011;persist security info=True;MultipleActiveResultSets=true");
             return new VotingDbContext(optionBuilder.Options);
         }
     }

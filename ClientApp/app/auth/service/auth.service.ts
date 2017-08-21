@@ -1,18 +1,27 @@
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
-
-import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AuthService {
   isLoggedIn=false;
-  private user:User=null;
-  cred;
+  private user:User;
+  //userLoadededEvent: EventEmitter<User> = new EventEmitter<User>();
   private manager=new UserManager(getClientSettings());
   redirectUrl:string;
   constructor() {
-    this.manager.getUser().then(user=>{
-      this.user=user;
-    });
+    // this.manager.getUser().then(user=>{
+    //   if(user){
+    //     console.log("User in Constructor:",user);
+        
+    //     this.user=user;
+    //     //this.userLoadededEvent.emit(user);
+    //     console.log("this.user in Constructor:",user);
+    //   }else{
+    //     //console.log("Start Auth in Constructor");
+    //     //this.startAuthentication();
+    //   }
+      
+    // });
   }
 
   login(userId:string, password:string):boolean{
@@ -29,13 +38,12 @@ export class AuthService {
   }
 
   logout(){
-    this.manager.signoutPopup();
-  }
+    this.manager.signoutRedirect();
+    }
 
   isLogged(): boolean {
-    
-    console.log("User in AuthService:",this.user);
-    return this.user != null && !this.user.expired;
+      console.log("Session Key: ",sessionStorage.getItem("oidc.user:http://localhost:5000/:angular2"));
+      return this.user != null && !this.user.expired;
   }
 
   getClaims(): any {
@@ -53,11 +61,14 @@ export class AuthService {
   completeAuthentication(): Promise<void> {
     return this.manager.signinRedirectCallback().then(user => {
       console.log('Callback user:', user);
-      this.cred=user;
       this.user = user;
+      //this.cred=user;
+      console.log("this.user", this.user);
     });
   }
 }
+
+
 
 export function getClientSettings(): UserManagerSettings {
   return {
@@ -65,9 +76,11 @@ export function getClientSettings(): UserManagerSettings {
     client_id: 'angular2',
     redirect_uri: 'http://localhost:5200/auth-callback',
     post_logout_redirect_uri: 'http://localhost:5200/',
+    popup_redirect_uri:'http://localhost:5200/auth-callback',
+    popup_post_logout_redirect_uri:'http://localhost:5200/',
     response_type: "id_token token",
     scope: "openid profile api1 voteEventData",
-    //filterProtocolClaims: true,
+    filterProtocolClaims: true,
     loadUserInfo: true
   };
 

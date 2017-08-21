@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +22,7 @@ export class VoteHomeComponent implements OnInit, OnDestroy {
   voteEvents;
   subscription:Subscription;
   submitted=false;
-  isLogged;
+  isLogged:boolean;
   constructor(private voteDataService:VoteDataService,
               private authService:AuthService,
               private route:ActivatedRoute) { }
@@ -41,7 +43,7 @@ export class VoteHomeComponent implements OnInit, OnDestroy {
         this.voteEvents=data.events;
     
     });
-    console.log(this.voteEvents);
+    //console.log(this.voteEvents);
   }
   addVoteRecord(record:VoteRecord){
     this.submitted=true;
@@ -53,5 +55,13 @@ export class VoteHomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  isDue(dueDate:string){
+    let due=moment(dueDate, 'YYYY/MM/DD');
+    //console.log(due);
+    var now=moment();
+    return due<now;
+    
   }
 }

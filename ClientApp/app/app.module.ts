@@ -14,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserXhr } from '@angular/http';
 import { EventListResolverService } from './voting/service/event-list-resolver.service';
 import { HttpModule } from '@angular/http';
+import { Ids4TestComponent } from './ids4-test/ids4-test.component';
 import {NgxChartsModule} from '@swimlane/ngx-charts/release';
 import { TestComponent } from './test/test.component';
 import {ToasterModule} from 'angular2-toaster/angular2-toaster';
@@ -27,7 +28,12 @@ import { sharedConfig } from './app.module.shared';
 
 @NgModule({
     bootstrap: [AppComponent],
-    declarations: [...sharedConfig.declarations, TestComponent, AuthCallbackComponent],
+    declarations: [
+        ...sharedConfig.declarations, 
+        TestComponent, 
+        AuthCallbackComponent, 
+        Ids4TestComponent
+    ],
     imports: [
         BrowserModule,
         FormsModule,

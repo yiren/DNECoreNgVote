@@ -6,7 +6,9 @@ import { AuthGuardService } from './auth/service/auth-guard.service';
 import { EditEventComponent } from './voting/edit-event/edit-event.component';
 import { EventFormComponent } from './voting/event-form/event-form.component';
 import { EventListResolverService } from './voting/service/event-list-resolver.service';
+import { Ids4TestComponent } from './ids4-test/ids4-test.component';
 import { LoginComponent } from './auth/login/login.component';
+import { TestComponent } from './test/test.component';
 import { VoteFormComponent } from './voting/vote-form/vote-form.component';
 import { VoteHomeComponent } from './voting/vote-home.component';
 import { VoteResultResolverService } from './voting/service/vote-result-resolver.service';
@@ -17,6 +19,14 @@ export const AppRoute:Routes=[
   {
     path:'auth-callback',
     component:AuthCallbackComponent
+  },
+  {
+    path:'id4test',
+    component:Ids4TestComponent
+  },
+  {
+    path:'test',
+    component:TestComponent
   },
   {
     path:'createVote', 

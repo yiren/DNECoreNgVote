@@ -42,7 +42,8 @@ module.exports = (env) => {
                 'ng2-toasty/style.css',
                 'ng2-toasty/style-default.css',
                 'ng2-toasty/style-material.css',
-                'ng2-toasty/style-bootstrap.css'
+                'ng2-toasty/style-bootstrap.css',
+                'moment'
             ]
         },
         output: {
