@@ -11,6 +11,7 @@ namespace CoreMVC.ViewModel.Voting
         public string EventName { get; set; }
         public bool isDue { get; set; }
         public string DueDate { get; set; }
+        public int DneUsers { get; set; }
         public ICollection<String> ItemNames { get; set; }
     }
 }

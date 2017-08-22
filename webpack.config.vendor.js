@@ -38,12 +38,9 @@ module.exports = (env) => {
                 'primeng/resources/themes/omega/theme.css',
                 'primeng/resources/primeng.min.css',
                 'angular2-toaster/toaster.css',
-                'ng2-toasty',
-                'ng2-toasty/style.css',
-                'ng2-toasty/style-default.css',
-                'ng2-toasty/style-material.css',
-                'ng2-toasty/style-bootstrap.css',
-                'moment'
+                'moment',
+
+
             ]
         },
         output: {

@@ -13,7 +13,7 @@ export class EventListResolverService implements Resolve<VoteEvent[]> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): VoteEvent[] | Observable<VoteEvent[]> | Promise<VoteEvent[]> {
     return this.voteDataService.getVoteEvents()
-               .do(console.log)
+               //.do(console.log)
                .toPromise()
                .then((data=>{
                  return data;

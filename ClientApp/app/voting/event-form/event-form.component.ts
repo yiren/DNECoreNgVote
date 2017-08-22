@@ -23,7 +23,8 @@ export class EventFormComponent implements OnInit {
       'eventId':new FormControl(''),
       'eventName':new FormControl(null,Validators.required),
       'itemNames':new FormArray([]),
-      'dueDate': new FormControl('',Validators.required)
+      'dueDate': new FormControl('',Validators.required),
+      'dneUsers':new FormControl('', [Validators.required])
     });
     this.events$=this.voteDataService.getEventList();
     //console.log(this.events$);
@@ -43,7 +44,8 @@ export class EventFormComponent implements OnInit {
   onSubmit(){
     this.submitted=true;
     //console.log(this.eventForm);
-    this.voteDataService.addVoteEvent(this.eventForm.value);
-    this.router.navigateByUrl("/");
+    this.voteDataService.addVoteEvent(this.eventForm.value)
+        .subscribe(res=>this.router.navigateByUrl("/"));
+    
   }
 }

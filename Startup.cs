@@ -46,6 +46,7 @@ namespace updatedAngularCoreTemplate
                     }); ;
             services.AddDbContext<VotingDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("VotingDataStore")));
+                //options.UseInMemoryDatabase());
 
             services.AddAuthorization(options =>
             {

@@ -109,36 +109,29 @@ export class VoteDataService {
 
   addVoteEvent(event:VoteEvent){
     const body=JSON.stringify(event);
-    console.log(body);
+    //console.log(body);
     let headers=new Headers();
     headers.append('content-type','application/json');
-    this.http.post(this.voteEventUrl, body, {headers:headers})
-        .do(console.log)
-        .subscribe(res=>{
-          console.log(res);
-        })
+    return this.http.post(this.voteEventUrl, body, {headers:headers});
   }
   getEventList(){
     return this.http.get(this.voteEventUrl)
-                .do(console.log)
+                //.do(console.log)
                 .map(res=>res.json() as VoteEvent[])
                 ;
   }
   getVoteEventById(eventId:string){
     return this.http.get(this.voteEventUrl+'/'+eventId)
-                    .do(console.log)
+                   // .do(console.log)
                     .map(res=>res.json() as VoteEvent);
   }
 
   addVoteRecord(vote:VoteRecord){
-    console.log("Added Vote:", vote);
+    //console.log("Added Vote:", vote);
     let headers=new Headers();
     headers.append('content-type','application/json');
-    this.http.post(this.voteRecordUrl, vote, {headers:headers})
-        .do(console.log)
-        .subscribe(res=>{
-          console.log(res);
-        })
+    return this.http.post(this.voteRecordUrl, vote, {headers:headers});
+        
     // this.getVoteItemById(vote.itemId)
     //     .subscribe(
     //       (res: VoteItem) => {
@@ -185,7 +178,7 @@ export class VoteDataService {
     //     })
     //     .do(console.log);
     return this.http.get(this.voteEventUrl+'/'+eventId+'/voteresult')
-                    .do(console.log)
+                   // .do(console.log)
                     .map(res=>res.json() as VoteResult);
 
   }
@@ -204,24 +197,24 @@ export class VoteDataService {
     return this.http.get(this.voteEventUrl
       //, {headers:header}
     )
-               .do(console.log)
+               //.do(console.log)
                .map(res=>res.json() as VoteEvent[])
                ;
   }
 
   updateEventById(eventId:string, voteEvent:VoteEvent){
     const body=JSON.stringify(voteEvent);
-    console.log(body);
+    //console.log(body);
     const headers=new Headers();
     headers.append('content-type','application/json');
-    this.http.put(this.voteEventUrl+'/'+eventId, body, {headers:headers})
-              .subscribe(res => console.log(res));
+    return this.http.put(this.voteEventUrl+'/'+eventId, body, {headers:headers})
+              ;
   }
   
   deleteEventById(eventId:string){
     const headers=new Headers();
     headers.append('content-type','application/json');
-    this.http.delete(this.voteEventUrl+'/'+eventId, {headers:headers})
-              .subscribe(res => console.log(res));
+    return this.http.delete(this.voteEventUrl+'/'+eventId, {headers:headers})
+              
   }
 }

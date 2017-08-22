@@ -9,5 +9,6 @@ export interface VoteEvent{
   createDate?:string,
   isDue:boolean,
   voteItems:VoteItem[],
-  voteRecords:VoteRecord[]
+  voteRecords:VoteRecord[],
+  dneUsers:number
 }

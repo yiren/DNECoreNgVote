@@ -18,7 +18,9 @@
   -->
 </div>
 <div *ngIf="isLoaded">
-    <ngx-charts-bar-vertical [view]="view" [scheme]="colorScheme" [results]="single" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel" (select)="onSelect($event)">
-    </ngx-charts-bar-vertical>
+    <h3>投票結果</h3>
+
+    <a [routerLink]="['/']" class="btn btn-secondary">回投票首頁</a>
+    <ngx-charts-pie-grid [view]="view" [scheme]="colorScheme" [results]="single" (select)="onSelect($event)">
+    </ngx-charts-pie-grid>
 </div>

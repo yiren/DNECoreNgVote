@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as moment from 'moment';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -19,7 +20,9 @@ import { VoteRecord } from './model/VoteRecord';
 export class VoteHomeComponent implements OnInit, OnDestroy {
 
   voteItems;
-  voteEvents;
+  //voteEvents;
+  activeEvents;
+  dueEvents;
   subscription:Subscription;
   submitted=false;
   isLogged:boolean;
@@ -40,8 +43,10 @@ export class VoteHomeComponent implements OnInit, OnDestroy {
     this.isLogged=this.authService.isLoggedIn;
     this.subscription=this.route.data.subscribe(data=>{
         //console.log(data.events);
-        this.voteEvents=data.events;
-    
+        //this.voteEvents=data.events;
+        this.activeEvents=_.filter(data.events, (event:VoteEvent)=>!this.isDue(event.dueDate)); 
+        this.dueEvents=_.filter(data.events, (event:VoteEvent)=>this.isDue(event.dueDate))
+        //console.log(this.dueEvents);
     });
     //console.log(this.voteEvents);
   }

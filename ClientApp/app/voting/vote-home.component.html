@@ -11,18 +11,19 @@
     <app-voting-result></app-voting-result>
     -->
 
-<div class="col-md-12">
-    <a class="btn btn-primary" [routerLink]="['/createVote']" *ngIf="isLogged else login">建立投票活動</a>
-    <ng-template #login>
-        <a class="btn btn-success" [routerLink]="['/login']">管理(帳號:admin，密碼:兩排)</a>
-    </ng-template>
+<div class="row">
+    <h3>進行中項目</h3>
 </div>
 <div class="row">
-    <div class="col-md-4" *ngFor="let event of voteEvents">
 
-        <div class="card mw-50 m-2">
+    <div class="col-md-4" *ngFor="let event of activeEvents">
+
+        <div class="card mw-50 m-2 card-outline-primary">
             <div class="card-block">
                 <h4 class="card-title">{{event.eventName}}</h4>
+                <p class="card-text">
+                    截止日期:{{event.dueDate}}
+                </p>
                 <p class="card-text">
 
                     <a *ngIf="!isDue(event.dueDate) else disableVote" [routerLink]="['voteForm',event.eventId]" class="btn btn-primary">去投票</a>
@@ -30,16 +31,60 @@
                     <ng-template #disableVote>
                         <button class="btn btn-default" disabled>已結束</button>
                     </ng-template>
-                    <a [routerLink]="[event.eventId,'voteResult']" class="btn btn-info">投票結果</a>
+                    <a [routerLink]="[event.eventId,'voteResult']" class="btn btn-info pull-right">看結果</a>
                 </p>
                 <p class="card-text">
                     <a [routerLink]="[event.eventId,'editEvent']" class="btn btn-danger" *ngIf="isLogged">編輯活動</a>
                 </p>
             </div>
-            <div class="card-footer text-muted">
-                {{event.dueDate}}
+            <div class="card-footer text-muted text-center">
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<hr>
+<div class="row">
+    <h3>已截止項目</h3>
+</div>
+<div class="row">
+
+    <div class="col-md-4" *ngFor="let event of dueEvents">
+
+        <div class="card mw-50 m-2 ">
+            <div class="card-block">
+                <h4 class="card-title">{{event.eventName}}</h4>
+                <p class="card-text ">
+                    截止日期:{{event.dueDate}}
+                </p>
+                <p class="card-text ">
+
+                    <a *ngIf="!isDue(event.dueDate) else disableVote " [routerLink]="[ 'voteForm',event.eventId] " class="btn btn-primary ">去投票</a>
+
+                    <ng-template #disableVote>
+                        <button class="btn btn-default " disabled>已結束</button>
+                    </ng-template>
+                    <a [routerLink]="[event.eventId, 'voteResult'] " class="btn btn-info pull-right ">看結果</a>
+                </p>
+                <p class="card-text ">
+                    <a [routerLink]="[event.eventId, 'editEvent'] " class="btn btn-danger " *ngIf="isLogged ">編輯活動</a>
+                </p>
+            </div>
+            <div class="card-footer text-muted ">
+
             </div>
         </div>
 
     </div>
 </div>
+<footer>
+    <div class="col-md-12 ">
+        <a class="btn btn-primary pull-right " [routerLink]="[ '/createVote'] " *ngIf="isLogged else login ">建立投票活動</a>
+        <ng-template #login>
+            <a class="btn btn-secondary pull-right " [routerLink]="[ '/login'] ">管理(帳號:admin，密碼:兩排)</a>
+        </ng-template>
+    </div>
+</footer>

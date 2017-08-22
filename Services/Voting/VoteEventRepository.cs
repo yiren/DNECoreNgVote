@@ -24,6 +24,7 @@ namespace CoreMVC.Data.Voting.Service
             var record = new VoteEvent();
             record.EventId = Guid.NewGuid();
             record.EventName = newEvent.EventName;
+            record.DneUsers = newEvent.DneUsers;
             record.CreateDate = DateTime.Now.ToString("yyyy/MM/dd");
             record.DueDate = DateTime.Parse(newEvent.DueDate).ToString("yyyy/MM/dd");
             var items = new List<VoteItem>();
@@ -34,16 +35,17 @@ namespace CoreMVC.Data.Voting.Service
                 v.ItemName = ItemName;
                 v.EventId = record.EventId;
                 //await db.VoteItems.AddAsync(v);
-                db.VoteItems.Add(v);
+                items.Add(v);
                 
             }
             
             try
             {
+                db.VoteItems.AddRange(items);
                 
                 db.VoteEvents.Add(record);
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -59,7 +61,7 @@ namespace CoreMVC.Data.Voting.Service
             var eventId = new Guid(id);
             var e =db.VoteEvents.Include(t=>t.VoteItems).Include(t=>t.VoteRecords).Single(t => t.EventId.Equals(eventId));
             e.EventName = updatedEvent.EventName;
-          
+            e.DneUsers = updatedEvent.DneUsers;
             e.DueDate = DateTime.Parse(updatedEvent.DueDate).ToString("yyyy/MM/dd");
             List<string> dbItems = new List<string>();
             List<string> updatedItems = new List<string>();
@@ -103,7 +105,7 @@ namespace CoreMVC.Data.Voting.Service
                 db.VoteItems.AddRange(items);
                 
                 db.VoteEvents.Update(e);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 
             }
             catch (Exception ex)
@@ -112,17 +114,7 @@ namespace CoreMVC.Data.Voting.Service
             }
             
         }
-        public async Task AddVoteEvent(VoteEvent voteEvent)
-        {
-            voteEvent.EventId = Guid.NewGuid();
-            //voteEvent.LastModifiedDate = DateTime.Now.ToString("yyyy/MM/dd");
-            foreach (var item in voteEvent.VoteItems)
-            {
-                item.EventId = voteEvent.EventId;
-            }
-            db.VoteEvents.Add(voteEvent);
-            await db.SaveChangesAsync();
-        }
+        
 
         public async Task<IList<VoteEvent>> GetVoteList()
         {
@@ -167,7 +159,7 @@ namespace CoreMVC.Data.Voting.Service
             var eventId = new Guid(id);
             var e = db.VoteEvents.Where(v => v.EventId.Equals(eventId)).Include(v => v.VoteItems).Include(v => v.VoteRecords).SingleOrDefault();
             db.VoteEvents.Remove(e);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
         public async Task<ItemFile> SaveUploadedItemFile(string fileName)

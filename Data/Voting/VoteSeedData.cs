@@ -121,10 +121,10 @@ namespace CoreMVC.Data.Voting
                 db.VoteItems.AddRange(voteItems);
                 db.VoteRecords.AddRange(voteRecords);
                 db.VoteEvents.Add(voteEvent);
-                db.VoteEvents.Add(voteEvent2);
-                db.VoteEvents.Add(voteEvent3);
-                db.VoteEvents.Add(voteEvent4);
-                db.VoteEvents.Add(voteEvent5);
+                //db.VoteEvents.Add(voteEvent2);
+                //db.VoteEvents.Add(voteEvent3);
+                //db.VoteEvents.Add(voteEvent4);
+                //db.VoteEvents.Add(voteEvent5);
                 db.SaveChanges();
             }
             

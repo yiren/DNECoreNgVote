@@ -27,7 +27,8 @@ export class EditEventComponent implements OnInit {
                     'eventId': new FormControl(''),
                     'eventName': new FormControl('', Validators.required),
                     'itemNames':new FormArray([]),
-                    'dueDate': new FormControl('', Validators.required)
+                    'dueDate': new FormControl('', Validators.required),
+                    'dneUsers':new FormControl('', [Validators.required])
                   });
     this.subscription = this.voteDataService
                .getVoteEventById(this.route.snapshot.params['eventId'])
@@ -39,7 +40,8 @@ export class EditEventComponent implements OnInit {
                   this.editForm.patchValue({
                     'eventId':data.eventId,
                     'eventName': data.eventName,
-                    'dueDate': data.dueDate
+                    'dueDate': data.dueDate,
+                    'dneUsers':data.dneUsers
                   });
                   //console.log(itemsArray);
                });
@@ -56,7 +58,8 @@ export class EditEventComponent implements OnInit {
   }
 
   deleteEvent(){
-    this.voteDataService.deleteEventById(this.editForm.controls['eventId'].value);
+    this.voteDataService.deleteEventById(this.editForm.controls['eventId'].value)
+        .subscribe(res=>this.router.navigateByUrl("/"));
   }
 
   onSubmit(){
@@ -64,7 +67,8 @@ export class EditEventComponent implements OnInit {
     const eventId=this.editForm.controls['eventId'].value;
     this.subscription.unsubscribe();
     //console.log(this.editForm.value)
-    this.voteDataService.updateEventById(eventId, this.editForm.value);
-    this.router.navigateByUrl("/");
+    this.voteDataService.updateEventById(eventId, this.editForm.value)
+        .subscribe(res=>this.router.navigateByUrl("/"));
+    
   }
 }

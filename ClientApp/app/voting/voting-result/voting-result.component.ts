@@ -24,7 +24,7 @@ export class VotingResultComponent implements OnInit, OnDestroy {
 
   subscription:Subscription;
   single;  
-  view: any[] = [800, 600];
+  view: any[] = [600, 600];
   isLoaded=false;
   // options
   showXAxis = true;

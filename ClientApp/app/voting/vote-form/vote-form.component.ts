@@ -67,7 +67,7 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     this.subscription=this.voteDataService
         .getVoteEventById(this.route.snapshot.params['eventId'])
         .subscribe(event=>{
-          console.log(event);
+          //console.log(event);
 
           this.voteItems=event.voteItems;
           this.eventName=event.eventName;
@@ -84,10 +84,11 @@ export class VoteFormComponent implements OnInit, OnDestroy {
 
 
     
-    console.log("User$",this.users$);
+    //console.log("User$",this.users$);
     this.votingForm=new FormGroup({
       'voterName':new FormControl('',[Validators.required],this.validateDneUser.bind(this)),
-      'selectedOptionId':new FormControl(null,[Validators.required]),
+      'selectedOptionId':new FormControl(null,[Validators.required])
+      
       //'checkOptions':this.checkboxGroup
     });
     console.log(this.votingForm);
@@ -112,10 +113,10 @@ export class VoteFormComponent implements OnInit, OnDestroy {
       //console.log("dirty",control.dirty);
       //console.log("touched", control.touched);
       if(control && control.dirty && control.touched && !control.valid){
-        console.log(control.errors);
+        //console.log(control.errors);
         const messages = this.validationMessages[field];
         for(const key in control.errors){
-          console.log('error', messages[key]);
+          //console.log('error', messages[key]);
           this.formErrors[field]+=messages[key] + '';
         }
       }
@@ -188,8 +189,8 @@ export class VoteFormComponent implements OnInit, OnDestroy {
         new FormControl(this.eventId,Validators.required));
     //this.recordForEmit.emit(this.votingForm.value);
     //console.log(this.votingForm.value)
-    this.voteDataService.addVoteRecord(this.votingForm.value);
-    this.router.navigate(['/']);
+    this.voteDataService.addVoteRecord(this.votingForm.value)
+         .subscribe(res=>this.router.navigate(['/']));
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
