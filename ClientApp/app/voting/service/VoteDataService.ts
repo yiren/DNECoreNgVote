@@ -128,9 +128,11 @@ export class VoteDataService {
 
   addVoteRecord(vote:VoteRecord){
     //console.log("Added Vote:", vote);
+    const body=JSON.stringify(vote);
+    console.log(body);
     let headers=new Headers();
     headers.append('content-type','application/json');
-    return this.http.post(this.voteRecordUrl, vote, {headers:headers});
+    return this.http.post(this.voteRecordUrl, body, {headers:headers});
         
     // this.getVoteItemById(vote.itemId)
     //     .subscribe(

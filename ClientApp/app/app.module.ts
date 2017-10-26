@@ -71,9 +71,9 @@ import { sharedConfig } from './app.module.shared';
         AuthService,
         AuthConfig,
         ToasterService,
-        UploadService,
-        ProgressService,
-        {provide:BrowserXhr, useClass:CustomXhrService},
+       // UploadService,
+       // ProgressService,
+       // {provide:BrowserXhr, useClass:CustomXhrService},
         { provide: 'ORIGIN_URL', useValue: location.origin }
         // ,{provide:ErrorHandler,useClass:AppErrorHandler}
     ]

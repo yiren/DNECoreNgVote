@@ -118,7 +118,7 @@ namespace CoreMVC.Data.Voting.Service
 
         public async Task<IList<VoteEvent>> GetVoteList()
         {
-            var data= await db.VoteEvents.AsNoTracking().Include(e => e.VoteItems).Include(e => e.VoteRecords).ToListAsync();
+            var data= await db.VoteEvents.AsNoTracking().OrderBy(e=>e.DueDate).Include(e => e.VoteItems).Include(e => e.VoteRecords).ToListAsync();
             return data;
         }
 

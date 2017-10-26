@@ -60,10 +60,8 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     //   this.radioGroup.addControl(item.name, control);
     //   console.log('radio:',this.radioGroup);
     // }
-    this.input$.subscribe((input)=>{
-
-    })
-    console.log(this.name);
+    
+    //console.log(this.name);
     this.subscription=this.voteDataService
         .getVoteEventById(this.route.snapshot.params['eventId'])
         .subscribe(event=>{
@@ -91,13 +89,13 @@ export class VoteFormComponent implements OnInit, OnDestroy {
       
       //'checkOptions':this.checkboxGroup
     });
-    console.log(this.votingForm);
+    //console.log(this.votingForm);
     this.votingForm.valueChanges
       .subscribe(data=>{
-        console.log(data);
+        //console.log(data);
         this.onValueChanged(data)
       });
-
+    //console.log()
     //??
     this.onValueChanged();
   }
@@ -121,14 +119,14 @@ export class VoteFormComponent implements OnInit, OnDestroy {
         }
       }
     }
-    console.log(this.votingForm);
+    //console.log(this.votingForm);
 
 
   }
 
   validateDneUser(c: FormControl){
     const inputUser$=c.valueChanges.debounceTime(1000);
-     
+    //console.log(c.pending); 
     
 
     return new Promise((resolve, reject)=>{

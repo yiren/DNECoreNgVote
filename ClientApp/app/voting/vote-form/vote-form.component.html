@@ -1,35 +1,44 @@
 <h1>
-    {{eventName}}</h1>
+    {{eventName}}
+</h1>
 
 
-<form [formGroup]="votingForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="votingForm" (ngSubmit)="onSubmit()">
 
-    <div class="fomr-group">
-        <label for="">請輸入開機帳號</label>
-        <input class="form-control m-1" formControlName="voterName" placeholder="開機帳號" #name>
-        <div *ngIf="votingForm.controls['voterName'].hasError('required') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
-            請輸入開機帳號
+    <fieldset class="form-group">
+        <legend>1. 請輸入開機帳號</legend>
+        <div class="col-md-3">
+            <div class="input-group">
+                <div class="input-group-addon"><span class="fa fa-user"></span></div>
+                <input class="form-control" formControlName="voterName" placeholder="開機帳號" #name>
+                <i *ngIf="votingForm.controls['voterName'].pending" class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+
+            </div>
+            <div *ngIf="votingForm.controls['voterName'].hasError('required') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
+                請輸入開機帳號
+            </div>
+            <div *ngIf="votingForm.controls['voterName'].hasError('NotDneUser') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
+                您不是核技處成員喔!
+            </div>
         </div>
-        <div *ngIf="votingForm.controls['voterName'].hasError('NotDneUser') && !votingForm.controls['voterName'].pristine" class="alert alert-danger">
-            您不是核技處成員喔!
-        </div>
-    </div>
+    </fieldset>
 
 
 
-    <div class="form-group">
-        <label for="">請選擇</label>
+    <fieldset class="form-group">
+        <legend>2. 請選擇</legend>
+
         <div class="form-check" *ngFor="let item of voteItems">
             <label for="item" class="form-check-label">
               <input class="form-check-input" type="radio" [value]="item.itemId" formControlName="selectedOptionId" />
-              {{item.itemName}}
+              {{item.itemName}} <span class="fa fa-tag"></span>
             </label>
+            <div *ngIf="votingForm.controls['selectedOptionId'].hasError('required') && !votingForm.controls['selectedOptionId'].pristine" class="alert alert-danger">
+                請選擇
+            </div>
+        </div>
 
-        </div>
-        <div *ngIf="votingForm.controls['selectedOptionId'].hasError('required') && !votingForm.controls['selectedOptionId'].pristine" class="alert alert-danger">
-            請選擇
-        </div>
-    </div>
+    </fieldset>
 
 
     <!--
@@ -39,7 +48,10 @@
         </md-checkbox>
       </div>
 -->
-
+    <div *ngIf="!votingForm.valid && !votingForm.controls['voterName'].pristine" class="alert alert-warning col-md-3">
+        還有欄位沒有填寫完?
+    </div>
     <button type="submit" class="btn btn-success" [disabled]="!votingForm.valid || submitted">投票</button>
     <a [routerLink]="['/']" class="btn btn-secondary">回投票首頁</a>
+
 </form>

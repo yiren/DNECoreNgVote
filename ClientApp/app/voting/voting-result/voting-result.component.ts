@@ -24,7 +24,7 @@ export class VotingResultComponent implements OnInit, OnDestroy {
 
   subscription:Subscription;
   single;  
-  view: any[] = [600, 600];
+  view: any[] = [1000, 300];
   isLoaded=false;
   // options
   showXAxis = true;
@@ -99,7 +99,7 @@ export class VotingResultComponent implements OnInit, OnDestroy {
     //                     this.isLoaded=true;
     //                   });
     this.subscription=this.route.data.subscribe(data=>{
-      //console.log(data.result);
+      console.log(data.result);
       this.single=data.result;
       this.isLoaded=true;
     })

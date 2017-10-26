@@ -18,7 +18,7 @@ namespace CoreMVC.Data.Voting.Service
 
         public async Task AddVoteRecordAsync(VoteRecord record)
         {
-            var voted = db.VoteRecords.SingleOrDefault(r => r.VoterName.Equals(record.VoterName));
+            var voted = db.VoteRecords.SingleOrDefault(r => r.VoterName.Equals(record.VoterName)&& r.EventId.Equals(record.EventId));
             if (voted==null)
             {
                 record.RecordId = Guid.NewGuid();
