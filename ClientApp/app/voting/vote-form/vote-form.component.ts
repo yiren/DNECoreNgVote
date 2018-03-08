@@ -78,9 +78,6 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     //       console.log('checkbox:',this.checkboxGroup);
         }
         );
-
-
-
     
     //console.log("User$",this.users$);
     this.votingForm=new FormGroup({
@@ -120,8 +117,6 @@ export class VoteFormComponent implements OnInit, OnDestroy {
       }
     }
     //console.log(this.votingForm);
-
-
   }
 
   validateDneUser(c: FormControl){
@@ -130,10 +125,8 @@ export class VoteFormComponent implements OnInit, OnDestroy {
     
 
     return new Promise((resolve, reject)=>{
-            inputUser$
-            
-            .switchMap(user=>this.userService.queryDneUser(user))
-            
+            inputUser$          
+            .switchMap(user=>this.userService.queryDneUser(user))            
             .subscribe(
               res => {
                 //console.log(res.isDneUser);
@@ -178,11 +171,8 @@ export class VoteFormComponent implements OnInit, OnDestroy {
       'required':'請選擇'
     }
   }
-
-
-
+  
   onSubmit(){
-
     this.votingForm.addControl('eventId',
         new FormControl(this.eventId,Validators.required));
     //this.recordForEmit.emit(this.votingForm.value);

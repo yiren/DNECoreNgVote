@@ -43,7 +43,7 @@ namespace updatedAngularCoreTemplate
                     .AddJsonOptions(options => {
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                    }); ;
+                    });
             services.AddDbContext<VotingDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("VotingDataStore")));
                 //options.UseInMemoryDatabase());
