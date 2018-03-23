@@ -10,7 +10,14 @@
     <hr/>
     <app-voting-result></app-voting-result>
     -->
-
+<div class="row">
+    <div class="col-md-12 ">
+        <a class="btn btn-primary pull-right " [routerLink]="[ '/createVote'] " *ngIf="isLogged else login ">建立投票活動</a>
+        <ng-template #login>
+            <a class="btn btn-secondary pull-right " [routerLink]="[ '/login'] ">管理(帳號:admin，密碼:兩排)</a>
+        </ng-template>
+    </div>
+</div>
 <div class="row">
     <h3>進行中項目</h3>
 </div>
@@ -69,22 +76,16 @@
                     </ng-template>
                     <a [routerLink]="[event.eventId, 'voteResult'] " class="btn btn-info pull-right ">看結果</a>
                 </p>
-                <p class="card-text ">
-                    <a [routerLink]="[event.eventId, 'editEvent'] " class="btn btn-danger " *ngIf="isLogged ">編輯活動</a>
+                <p>
+
                 </p>
+
+
             </div>
             <div class="card-footer text-muted ">
-
+                <a [routerLink]="[event.eventId, 'editEvent'] " class="btn btn-danger pull-right" *ngIf="isLogged ">編輯活動</a>
             </div>
         </div>
 
     </div>
 </div>
-<footer>
-    <div class="col-md-12 ">
-        <a class="btn btn-primary pull-right " [routerLink]="[ '/createVote'] " *ngIf="isLogged else login ">建立投票活動</a>
-        <ng-template #login>
-            <a class="btn btn-secondary pull-right " [routerLink]="[ '/login'] ">管理(帳號:admin，密碼:兩排)</a>
-        </ng-template>
-    </div>
-</footer>

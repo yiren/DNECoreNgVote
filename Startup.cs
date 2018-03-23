@@ -48,21 +48,21 @@ namespace updatedAngularCoreTemplate
                 options.UseSqlServer(Configuration.GetConnectionString("VotingDataStore")));
                 //options.UseInMemoryDatabase());
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("dataAdmin", adminPolicy =>
-                {
-                    adminPolicy.RequireClaim("role", "dataEventRecords.admin");
-                });
-                options.AddPolicy("dataUser", userPolicy =>
-                {
-                    userPolicy.RequireClaim("role", "dataEventRecords.user");
-                });
-                options.AddPolicy("test", userPolicy =>
-                {
-                    userPolicy.RequireClaim("role", "user");
-                });
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("dataAdmin", adminPolicy =>
+            //    {
+            //        adminPolicy.RequireClaim("role", "dataEventRecords.admin");
+            //    });
+            //    options.AddPolicy("dataUser", userPolicy =>
+            //    {
+            //        userPolicy.RequireClaim("role", "dataEventRecords.user");
+            //    });
+            //    options.AddPolicy("test", userPolicy =>
+            //    {
+            //        userPolicy.RequireClaim("role", "user");
+            //    });
+            //});
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader()));
 
@@ -110,20 +110,20 @@ namespace updatedAngularCoreTemplate
 
             //});
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            // ClientCreditential
-            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
-            {
-                Authority = "http://localhost:5000",
-                AllowedScopes = new List<string> { "voteEventData", "api1" },
-                ApiSecret = "myVote",
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //// ClientCreditential
+            //app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            //{
+            //    Authority = "http://localhost:5000",
+            //    AllowedScopes = new List<string> { "voteEventData", "api1" },
+            //    ApiSecret = "myVote",
 
-                SupportedTokens = SupportedTokens.Both,
-                RequireHttpsMetadata = false,
-                ApiName = "voteEventData",
-                AutomaticChallenge = true,
-                AutomaticAuthenticate = true
-            });
+            //    SupportedTokens = SupportedTokens.Both,
+            //    RequireHttpsMetadata = false,
+            //    ApiName = "voteEventData",
+            //    AutomaticChallenge = true,
+            //    AutomaticAuthenticate = true
+            //});
             VoteSeedData.addVoteSeedData(voteDbContext);
             app.UseMvc(routes =>
             {

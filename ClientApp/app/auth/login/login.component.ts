@@ -28,13 +28,14 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     const userId=this.loginForm.controls['userId'].value;
     const password=this.loginForm.controls['password'].value
-    this.isValid=this.authService.login(userId,password)
-    if(this.isValid){
+    this.authService.login(userId,password).subscribe(res=>{
+      this.authService.setAuth(res);
       this.submitted=true;
+      //console.log(this.authService.getAuth());
       this.router.navigateByUrl(this.authService.redirectUrl?this.authService.redirectUrl:'/');
-    }else{
+    },(err)=>{
       this.toasterService.pop('error', '帳號或是密碼錯誤','請輸入正確資訊');
-    }
+    });
     
   }
 }

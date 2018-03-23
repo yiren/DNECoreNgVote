@@ -39,6 +39,9 @@ module.exports = (env) => {
                 'primeng/resources/primeng.min.css',
                 'angular2-toaster/toaster.css',
                 'moment',
+                'ngx-charts',
+                'd3',
+                'ng2-toasty'
 
 
             ]

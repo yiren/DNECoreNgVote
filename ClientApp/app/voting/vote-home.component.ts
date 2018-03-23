@@ -40,7 +40,7 @@ export class VoteHomeComponent implements OnInit, OnDestroy {
     //                       this.voteEvents=data;
     //                       console.log(this.voteEvents);
     //                     });
-    this.isLogged=this.authService.isLoggedIn;
+    this.isLogged=this.authService.getAuth()? true:false;
     this.subscription=this.route.data.subscribe(data=>{
         //console.log(data.events);
         //this.voteEvents=data.events;
