@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using CoreMVC.Data.Voting.Service;
 using ngVoteCore.Services.User;
+using Microsoft.Extensions.Configuration;
 
 namespace updatedAngularCoreTemplate.Controllers
 {
@@ -15,11 +16,13 @@ namespace updatedAngularCoreTemplate.Controllers
     {
         private readonly IHostingEnvironment env;
         private readonly IVoteEventRepository eventRepo;
+        private readonly IConfiguration configuration;
 
-        public HomeController(IHostingEnvironment env, IVoteEventRepository eventRepo)
+        public HomeController(IHostingEnvironment env, IVoteEventRepository eventRepo, IConfiguration configuration)
         {
             this.env = env;
             this.eventRepo = eventRepo;
+            this.configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -61,7 +64,13 @@ namespace updatedAngularCoreTemplate.Controllers
         LdapUserService ldapUserService = new LdapUserService();
         public IActionResult QueryLdapUser([FromQuery]string user)
         {
-            var isDneUser = ldapUserService.QueryLdapUser(user);
+            var isDneUser = ldapUserService.QueryLdapUser(
+                user,
+                configuration["ldap:searchBase"],
+                configuration["ldap:adServerAddress"],
+                configuration["ldap:username"],
+                configuration["ldap:password"]
+                );
             return new JsonResult(new {
                 isDneUser=isDneUser
             });

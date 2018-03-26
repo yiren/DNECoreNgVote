@@ -46,7 +46,7 @@ namespace updatedAngularCoreTemplate
                     });
             services.AddDbContext<VotingDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("VotingDataStore")));
-                //options.UseInMemoryDatabase());
+            //options.UseInMemoryDatabase());
 
             //services.AddAuthorization(options =>
             //{
@@ -66,7 +66,7 @@ namespace updatedAngularCoreTemplate
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader()));
 
-            
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<IVoteEventRepository, VoteEventRepository>();
             services.AddScoped<IVoteRecordRepository, VoteRecordRepository>();
             //services.AddNodeServices(options =>
